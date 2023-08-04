@@ -51,13 +51,19 @@ brew install MonitorControl
 #Install iTerm2 via Homebrew
 brew install --cask iterm2
 
+######################## Github thangs  ###################################
+
+git config --global user.name "Kellan St.Louis"
+brew tap microsoft/git
+brew install --cask git-credential-manager-core
+
 ######################## iTerm2 modifications ################################
 
 #Tweak these as needed later. 
 #This might be helpful: https://iterm2.com/documentation-dynamic-profiles.html
 
 #Install Source Code Pro font
-#brew tap homebrew/cask-fonts && brew install --cask font-source-code-pro
+brew tap homebrew/cask-fonts && brew install --cask font-source-code-pro
 
 ######################## Install ohmyzsh ####################################
 
