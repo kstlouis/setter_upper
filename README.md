@@ -1,4 +1,4 @@
-***WIP - work machine setup script***
+**WIP - work machine setup script**
 
 Very uninteresting (for now) boredom project for automating the steps I perform when setting up 
 a new work machine. 
