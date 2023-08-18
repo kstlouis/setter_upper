@@ -12,6 +12,7 @@
 
 # generate_ssh_key <-- commented out for now during testing
 install_homebrew
+install_neovim
 install_monitor_control
 install_custom_fonts
 install_iterm
@@ -19,6 +20,9 @@ install_sublime_text
 install_oh_my_zsh
 setup_github
 setup_dock
+set_wallpaper
+
+#install_slack_cli
 
 
 ######################## FUNCTIONS ###################################
@@ -53,6 +57,11 @@ function install_homebrew(){
   eval "$(/opt/homebrew/bin/brew shellenv)"
 }
 
+function install_neovim() {
+  brew install neovim
+}
+# TODO: plugins / dotfile
+
 function install_monitor_control(){
   brew install MonitorControl
 }
@@ -71,7 +80,7 @@ function setup_github(){
 }
 
 function install_custom_fonts(){
-  # Install Source Code Pro font
+  # Source Code Pro
   brew tap homebrew/cask-fonts && brew install --cask font-source-code-pro
 }
 
@@ -119,16 +128,24 @@ function setup_dock() {
     "$(add_dock_item /System/Applications/Mail.app)" \
     "$(add_dock_item /System/Applications/Notes.app)" \
     "$(add_dock_item /Applications/Slack.app)" \
+    "$(add_dock_item /Applications/Sublime\ Text.app)" \
     "$(add_dock_item /Applications/Numbers.app)" \
     "$(add_dock_item /Applications/Parcel.app)" \
+    "$(add_dock_item /Applications/Jobber\ Tools.app)" \
     "$(add_dock_item /Applications/iTerm.app)" \
     "$(add_dock_item /Applications/zoom.us.app)"
     killall Dock
 }
 
-######################## Add Wallpapers repo ####################################
-git clone https://github.com/kstlouis/Wallpapers.git ~/
-# still need to figure out how to set using script
+function install_slack_cli() {
+  curl -fsSL https://downloads.slack-edge.com/slack-cli/install.sh | bash
+}
+
+function set_wallpaper() {
+  git clone https://github.com/kstlouis/Wallpapers.git ~/
+  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/Users/kellan/Wallpapers/desert_sphere.jpg"'
+}
+#TODO - set pattern, have wallpaper change on timed interval if possible 
 
 
 
