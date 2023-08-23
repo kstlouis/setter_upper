@@ -1,29 +1,6 @@
 #!/bin/bash
 
-######################## SCRIPT STARTS  ###################################
-
-
-# # Check for the --no-ssh argument  <--- this is fine, but should build something better
-# if [[ "$*" == *"--no-ssh"* ]]; then
-#     echo "Skipping ssh-related commands."
-# else
-#     generate_ssh_key
-# fi
-
-# generate_ssh_key <-- commented out for now during testing
-install_homebrew
-install_neovim
-install_monitor_control
-install_custom_fonts
-install_iterm
-install_sublime_text
-install_oh_my_zsh
-setup_github
-setup_dock
-set_wallpaper
-
-#install_slack_cli
-
+# THIS SCRIPT NEEDS TO BE RUN AS ROOT.
 
 ######################## FUNCTIONS ###################################
 function generate_ssh_key() {
@@ -129,6 +106,7 @@ function setup_dock() {
     "$(add_dock_item /System/Applications/Notes.app)" \
     "$(add_dock_item /Applications/Slack.app)" \
     "$(add_dock_item /Applications/Sublime\ Text.app)" \
+    "$(add_dock_item /System/Applications/System\ Settings.app)" \
     "$(add_dock_item /Applications/Numbers.app)" \
     "$(add_dock_item /Applications/Parcel.app)" \
     "$(add_dock_item /Applications/Jobber\ Tools.app)" \
@@ -147,6 +125,63 @@ function set_wallpaper() {
 }
 #TODO - set pattern, have wallpaper change on timed interval if possible 
 
+function install_neovim() {
+  brew install neovim
+}
+
+function set_lock_screen() {
+  defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Kellan - 780-868-0310"
+}
+
+function set_preferred_view_style() {
+  defaults write com.apple.Finder FXPreferredViewStyle clmv
+  find / -name .DS_Store -delete; killall Finder
+}
+
+function install_teams() {
+  brew install --cask microsoft-teams
+}
+
+# function set_screensaver() {
+#   defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName "Album Artwork" path /System/Library/Screen\ Savers/Album\ Artwork.saver/ type 0
+# }
+# not currently working WIP
 
 
+# MORE TODOs
+# add the permanent sudo-touchID file (sonoma beta only)
+# allow USB to connect automatically when unlocked
+#    - defaults write com.apple.applicationaccess allowUSBRestrictedMode -bool false
+#    - doesn't work, but maybe a start?
+# custom screensaver!
+# column view by default in Finder!!!!
+#    - Airdrop to everyone
+#    - disable follow-up suggestions in Mail
+# install teams
 
+######################## APPLICATION START ###################################
+
+echo "Running .."
+
+# Check for the --with-ssh argument  <--- this is fine, but should build something better
+if [[ "$*" == *"--with-ssh"* ]]; then
+    generate_ssh_key
+else
+    echo "Skipping ssh keygen."
+fi
+
+install_homebrew
+install_neovim
+install_monitor_control
+install_custom_fonts
+install_iterm
+install_sublime_text
+install_oh_my_zsh
+install_neovim
+install_teams
+setup_github
+setup_dock
+set_wallpaper
+set_lock_screen
+set_preferred_view_style
+#install_slack_cli
